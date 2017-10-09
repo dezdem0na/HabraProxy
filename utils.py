@@ -72,8 +72,29 @@ def modify_text(url):
                            encoding='utf-8',
                            errors='strict')
     soup = Soup(output, "html.parser")
-    articles = (soup
-                .select("div.post__body > div.post__text"))
+    articles = []
+
+    #  post page
+    articles += (soup
+                 .select("div.page-header__info"))
+    articles += (soup
+                 .select("div.post__wrapper > header"))
+    articles += (soup
+                 .select("div.post__wrapper > h1"))
+    articles += (soup
+                 .select("div.post__wrapper > ul"))
+    articles += (soup
+                 .select("div.post__body.post__body_full > div.post__text"))
+    articles += (soup
+                 .select("div.post__wrapper > dl"))
+
+    #  main page
+    articles += (soup
+                 .select("article.post.post_preview"))
+    articles += (soup
+                 .select("div.content_left > div.page-header"))
+    articles += (soup
+                 .select("div.content_left > div.tabs"))
 
     for article in articles:
         for piece in article.find_all(text=True):
